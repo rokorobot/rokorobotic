@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
+@theme {
+  --font-ui: var(--font-ui), "ui-monospace", "SFMono-Regular", "Menlo", "monospace";
+  --font-brand: var(--font-brand), "Space Grotesk", "ui-sans-serif", "system-ui";
+  --tracking-micro: 0.34em;
+  --tracking-mid: 0.18em;
+  --tracking-headline: 0.12em;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ui);
+}
+
+/* scanline overlay + subtle noise */
+.console-scanlines {
+  position: relative;
+}
+.console-scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.06) 1px,
+    transparent 2px,
+    transparent 6px
+  );
+  mix-blend-mode: overlay;
+  z-index: 40;
+}
+.console-scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 3px 3px;
+  filter: blur(0.2px);
+  mix-blend-mode: overlay;
+  z-index: 40;
 }
